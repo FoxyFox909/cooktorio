@@ -1,0 +1,9 @@
+{
+    "name": "cooktorio",
+    "version": "0.1.0",
+    "title": "Cooktorio",
+    "author": "Foxiest_Engineer",
+    "factorio_version": "2.0.15",
+    "dependencies": ["base >= 2.0"],
+    "description": "Adds culinary recipes to Factorio. No longer are you forced to eat raw fish!"
+  }
