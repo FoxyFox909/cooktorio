@@ -24,10 +24,6 @@ function table_to_string(tbl)
     return result.."}"
 end
 
--- Stickers
-
-local speed_sticker = data.raw["sticker"]
-
 -- local smoked_recipe_category = {
 --     type = "recipe-category",
 --     name = "smoked-culinary"
@@ -60,23 +56,26 @@ data:extend{
 -- lua_pushstring(data.raw["furnace"]["stone-furnace"].crafting_categories, "smoked-culinary")
 -- data.raw["furnace"]["stone-furnace"].crafting_categories = {smoked_recipe_category}
 
+local default_fish_spoil_ticks = data.raw["capsule"]["raw-fish"].spoil_ticks
 
-local smoked_fish = table.deepcopy(data.raw["capsule"]["raw-fish"]) -- copy the table that defines the heavy armor item into the fireArmor variable
+local smoked_fish = table.deepcopy(data.raw["capsule"]["raw-fish"]) -- copy the table that defines item
 smoked_fish.name = "smoked-fish"
 smoked_fish.icons = {
   {
     icon = smoked_fish.icon,
     icon_size = smoked_fish.icon_size,
     tint = {r=1,g=0,b=0,a=1}
-  },
+  }
 }
+smoked_fish.spoil_ticks = default_fish_spoil_ticks * 1.5
 -- create the recipe prototype from scratch
 local smoked_fish_recipe = {
   type = "recipe",
   name = "smoked-fish",
   enabled = true,
   category = "smoked-culinary",
-  energy_required = 8, -- time to craft in seconds (at crafting speed 1)
+  energy_required = 4, -- time to craft in seconds (at crafting speed 1)
+  result_is_always_fresh = true,
   ingredients = {
     {type = "item", name = "raw-fish", amount = 1}
   },
@@ -92,13 +91,15 @@ cooked_fish.icons = {
     tint = {r=0,g=1,b=0,a=1}
   },
 }
+cooked_fish.spoil_ticks = default_fish_spoil_ticks * 1.5
 -- create the recipe prototype from scratch
 local cooked_fish_recipe = {
   type = "recipe",
   name = "cooked-fish",
   enabled = true,
   category = "cooked-culinary",
-  energy_required = 8, -- time to craft in seconds (at crafting speed 1)
+  energy_required = 4, -- time to craft in seconds (at crafting speed 1)
+  result_is_always_fresh = true,
   ingredients = {
     {type = "item", name = "raw-fish", amount = 1}
   },
@@ -114,25 +115,37 @@ grilled_fish.icons = {
     tint = {r=0,g=0,b=1,a=1}
   },
 }
+grilled_fish.spoil_ticks = default_fish_spoil_ticks * 1.5
 local grilled_fish_recipe = {
   type = "recipe",
   name = "grilled-fish",
   enabled = true,
   category = "grilled-culinary",
-  energy_required = 8,
+  energy_required = 4,
+  result_is_always_fresh = true,
   ingredients = {
-    {type = "item", name = "raw-fish", amount = 1}
+    {type = "item", name = "raw-fish", amount = 1}    
   },
   results = {{type = "item", name = "grilled-fish", amount = 1}}
 }
 
-
-
--- data:extend{smoked_fish, smoked_fish_recipe}
 data:extend{smoked_fish, smoked_fish_recipe, cooked_fish, cooked_fish_recipe, grilled_fish, grilled_fish_recipe}
 
-log("COOKTORIO TEST")
-log(table_to_string(data.raw["furnace"]["stone-furnace"].crafting_categories))
-log(table_to_string(data.raw["recipe-category"]))
+-- Stickers
+
+---@type data.StickerPrototype
+local speed_sticker = {
+    type = "sticker",
+    name = "speed-sticker",
+    duration_in_ticks = 200,
+    target_movement_modifier = 1.12,
+    target_movement_modifier_to = 1.0
+}
+
+data:extend{speed_sticker}
+
+-- log("COOKTORIO TEST")
+-- log(table_to_string(data.raw["furnace"]["stone-furnace"].crafting_categories))
+-- log(table_to_string(data.raw["recipe-category"]))
 
 -- log("COOKTORIO COOKED")

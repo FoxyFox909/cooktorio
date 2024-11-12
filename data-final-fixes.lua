@@ -16,12 +16,3 @@ end
 insert_crafting_category("furnace", "stone-furnace", "smoked-culinary")
 insert_crafting_category("furnace", "steel-furnace", "cooked-culinary")
 insert_crafting_category("furnace", "electric-furnace", "grilled-culinary")
-
-
-
-
--- local stone_furnace_recipe_cats = table.deepcopy(data.raw["furnace"]["stone-furnace"].crafting_categories)
--- table.insert(stone_furnace_recipe_cats, "smoked-culinary")
--- data.raw["furnace"]["stone-furnace"].crafting_categories = stone_furnace_recipe_cats
-
-
